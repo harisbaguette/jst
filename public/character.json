@@ -1,0 +1,21 @@
+{
+  "name": "서아",
+  "model": "/characters/seoah.vsplat",
+  "motions": [
+    {
+      "name": "idle",
+      "label": "대기",
+      "url": "/motions/idle.glb"
+    },
+    {
+      "name": "walk",
+      "label": "걷기",
+      "url": "/motions/walk.glb"
+    },
+    {
+      "name": "run",
+      "label": "달리기",
+      "url": "/motions/run.glb"
+    }
+  ]
+}

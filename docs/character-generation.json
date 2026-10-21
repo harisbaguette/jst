@@ -1,0 +1,18 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"taskId\": \"4063a6a7-2532-4731-ba25-944d1c2d5f6b\",\n  \"kind\": \"character\",\n  \"images\": [\n    \"user_upload_temp/pinoc/3bcb0f9d8becc4c05fe8b763381c79e2.png\"\n  ],\n  \"refine\": true,\n  \"creditsCharged\": 10,\n  \"nextSteps\": \"Credits are charged at submit, so this generation is already paid for - do NOT call generate_character again for the same images. Poll it with wait_for_tasks {kind:\\\"character\\\", taskId:\\\"4063a6a7-2532-4731-ba25-944d1c2d5f6b\\\"}. It takes minutes, so expect several rounds; tell the user it is running rather than blocking silently.\"\n}"
+    }
+  ],
+  "structuredContent": {
+    "taskId": "4063a6a7-2532-4731-ba25-944d1c2d5f6b",
+    "kind": "character",
+    "images": [
+      "user_upload_temp/pinoc/3bcb0f9d8becc4c05fe8b763381c79e2.png"
+    ],
+    "refine": true,
+    "creditsCharged": 10,
+    "nextSteps": "Credits are charged at submit, so this generation is already paid for - do NOT call generate_character again for the same images. Poll it with wait_for_tasks {kind:\"character\", taskId:\"4063a6a7-2532-4731-ba25-944d1c2d5f6b\"}. It takes minutes, so expect several rounds; tell the user it is running rather than blocking silently."
+  }
+}

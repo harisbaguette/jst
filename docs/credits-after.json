@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"total\": 50,\n  \"freeCredits\": 50,\n  \"planCredits\": 0,\n  \"purchasedCredits\": 0,\n  \"prices\": {\n    \"generate_character\": \"10 credits, or 6 with refine off\",\n    \"generate_motion\": \"1 per second of requested duration, so 1-60 credits for a 1-60s clip; flat in the 4 samples it produces\",\n    \"generate_motion_from_video\": \"1 per second of footage extracted, rounded up - the whole video unless trimStartSeconds/trimDurationSeconds narrow it\",\n    \"take_library_motion\": \"free\"\n  },\n  \"nextSteps\": \"These prices are this server's copy and the charge is computed by PINOC at submit; treat them as an estimate. Taking a library clip is always free, so try list_motion_library before spending anything.\"\n}"
+    }
+  ],
+  "structuredContent": {
+    "total": 50,
+    "freeCredits": 50,
+    "planCredits": 0,
+    "purchasedCredits": 0,
+    "prices": {
+      "generate_character": "10 credits, or 6 with refine off",
+      "generate_motion": "1 per second of requested duration, so 1-60 credits for a 1-60s clip; flat in the 4 samples it produces",
+      "generate_motion_from_video": "1 per second of footage extracted, rounded up - the whole video unless trimStartSeconds/trimDurationSeconds narrow it",
+      "take_library_motion": "free"
+    },
+    "nextSteps": "These prices are this server's copy and the charge is computed by PINOC at submit; treat them as an estimate. Taking a library clip is always free, so try list_motion_library before spending anything."
+  }
+}

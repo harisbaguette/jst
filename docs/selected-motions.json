@@ -1,0 +1,43 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"requested\": 3,\n  \"taken\": 3,\n  \"failed\": 0,\n  \"creditsCharged\": 0,\n  \"format\": \"441-bone MetaHuman armature GLB (skeleton animation, no mesh)\",\n  \"motions\": [\n    {\n      \"requested\": \"1cbf45b5-5abe-4a88-97cd-a1a21da60d7b\",\n      \"assetPublicId\": \"1cbf45b5-5abe-4a88-97cd-a1a21da60d7b\",\n      \"displayName\": \"Standing Idle\",\n      \"keywords\": [\n        \"idle\",\n        \"standing\"\n      ]\n    },\n    {\n      \"requested\": \"32d71c7f-e88a-4d1f-9c0c-1fde2da5f060\",\n      \"assetPublicId\": \"32d71c7f-e88a-4d1f-9c0c-1fde2da5f060\",\n      \"displayName\": \"Walking\",\n      \"keywords\": [\n        \"walking\"\n      ]\n    },\n    {\n      \"requested\": \"32c1d7ba-29d6-466c-a2bc-56ff17ca4d1a\",\n      \"assetPublicId\": \"32c1d7ba-29d6-466c-a2bc-56ff17ca4d1a\",\n      \"displayName\": \"Running\",\n      \"keywords\": [\n        \"running\"\n      ]\n    }\n  ],\n  \"nextSteps\": \"3 clips are ready now - no tasks, no polling, no credits charged. Call get_asset with the returned assetPublicId (not the taskId), then present the selected signed URL as a clickable download link. This PINOC server is remote: download_asset cannot write to your disk, and a download-link request does not require a local file. They are all the same format, so this is said once for all of them: each is an armature-only clip - a skeleton with NO mesh, so it needs a character to drive. GLB opens in any glTF tool - Unity, Blender, Unreal, three.js - with nothing extra installed. Every asset can also be previewed and edited in the PINOC web app at https://viggle.ai/pinoc/app.\"\n}"
+    }
+  ],
+  "structuredContent": {
+    "requested": 3,
+    "taken": 3,
+    "failed": 0,
+    "creditsCharged": 0,
+    "format": "441-bone MetaHuman armature GLB (skeleton animation, no mesh)",
+    "motions": [
+      {
+        "requested": "1cbf45b5-5abe-4a88-97cd-a1a21da60d7b",
+        "assetPublicId": "1cbf45b5-5abe-4a88-97cd-a1a21da60d7b",
+        "displayName": "Standing Idle",
+        "keywords": [
+          "idle",
+          "standing"
+        ]
+      },
+      {
+        "requested": "32d71c7f-e88a-4d1f-9c0c-1fde2da5f060",
+        "assetPublicId": "32d71c7f-e88a-4d1f-9c0c-1fde2da5f060",
+        "displayName": "Walking",
+        "keywords": [
+          "walking"
+        ]
+      },
+      {
+        "requested": "32c1d7ba-29d6-466c-a2bc-56ff17ca4d1a",
+        "assetPublicId": "32c1d7ba-29d6-466c-a2bc-56ff17ca4d1a",
+        "displayName": "Running",
+        "keywords": [
+          "running"
+        ]
+      }
+    ],
+    "nextSteps": "3 clips are ready now - no tasks, no polling, no credits charged. Call get_asset with the returned assetPublicId (not the taskId), then present the selected signed URL as a clickable download link. This PINOC server is remote: download_asset cannot write to your disk, and a download-link request does not require a local file. They are all the same format, so this is said once for all of them: each is an armature-only clip - a skeleton with NO mesh, so it needs a character to drive. GLB opens in any glTF tool - Unity, Blender, Unreal, three.js - with nothing extra installed. Every asset can also be previewed and edited in the PINOC web app at https://viggle.ai/pinoc/app."
+  }
+}

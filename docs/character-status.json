@@ -1,0 +1,27 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"waitedSeconds\": 0,\n  \"allSettled\": true,\n  \"tasks\": [\n    {\n      \"kind\": \"character\",\n      \"taskId\": \"4063a6a7-2532-4731-ba25-944d1c2d5f6b\",\n      \"state\": \"ready\",\n      \"status\": \"converting_bin\",\n      \"assets\": [\n        {\n          \"assetPublicId\": \"181332d0-bf2e-461a-807f-d3aabea86605\",\n          \"displayName\": \"3bcb0f9d8becc4c05fe8b763381c79e2\"\n        }\n      ]\n    }\n  ],\n  \"nextSteps\": \"1 ready. Call get_asset with the returned assetPublicId (not the taskId), then present the selected signed URL as a clickable download link. This PINOC server is remote: download_asset cannot write to your disk, and a download-link request does not require a local file. A text motion task produces several samples of one prompt - read their names and take one rather than fetching all of them.\"\n}"
+    }
+  ],
+  "structuredContent": {
+    "waitedSeconds": 0,
+    "allSettled": true,
+    "tasks": [
+      {
+        "kind": "character",
+        "taskId": "4063a6a7-2532-4731-ba25-944d1c2d5f6b",
+        "state": "ready",
+        "status": "converting_bin",
+        "assets": [
+          {
+            "assetPublicId": "181332d0-bf2e-461a-807f-d3aabea86605",
+            "displayName": "3bcb0f9d8becc4c05fe8b763381c79e2"
+          }
+        ]
+      }
+    ],
+    "nextSteps": "1 ready. Call get_asset with the returned assetPublicId (not the taskId), then present the selected signed URL as a clickable download link. This PINOC server is remote: download_asset cannot write to your disk, and a download-link request does not require a local file. A text motion task produces several samples of one prompt - read their names and take one rather than fetching all of them."
+  }
+}

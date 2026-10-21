@@ -1,0 +1,618 @@
+[
+  {
+    "annotations": {
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": true,
+      "readOnlyHint": false
+    },
+    "description": "Fill in what one view of a scene is missing: the place is rebuilt with a new image generated from that camera, and the scene's file is replaced by the better one. COSTS 3 CREDITS and takes about ten seconds; returns a task id, not the finished scene. Takes a viewId from suggest_environment_views and nothing else - there is no way to aim a fill by hand here, on purpose, because a pose nobody has looked at is a generation spent on nowhere. ONE AT A TIME: a scene takes one fill at a time and the next is refused until this one lands. After it lands the place has been searched again, so every id from before is refused - call suggest_environment_views for the new list, and keep filling until it comes back empty.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "assetPublicId": {
+          "type": "string",
+          "description": "the scene's UUID, the same one you passed to suggest_environment_views"
+        },
+        "viewId": {
+          "type": "string",
+          "description": "a viewId from suggest_environment_views, copied exactly as printed INCLUDING its @version, e.g. v1@3. A bare label like v1 is refused: a fill renumbers the views, so an id without its version cannot be resolved safely"
+        }
+      },
+      "required": [
+        "assetPublicId",
+        "viewId"
+      ],
+      "additionalProperties": false
+    },
+    "name": "expand_environment"
+  },
+  {
+    "_meta": {
+      "openai/fileParams": [
+        "imageFiles"
+      ]
+    },
+    "annotations": {
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": true,
+      "readOnlyHint": false
+    },
+    "description": "Generate a 3D character from 1-5 photographs of one person OR from a text description (prompt). With a prompt, PINOC generates its own source image first; everything after that is identical, same cost, same result shape. The refine pass runs by default, so this COSTS CREDITS (10, or 6 with refine set to false) and takes minutes. Returns a task id immediately and does not wait; poll it with wait_for_tasks. The result is a rigged Gaussian-splat bundle that plays the motion clips from the other tools. If the user ATTACHED photographs to the conversation, pass them as imageFiles and nothing else is needed. Only when you hold files the client cannot attach: upload them with prepare_upload and pass the resulting uploadKeys.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uploadKeys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "1 to 5 uploadKeys from prepare_upload, one per image, after each PUT has succeeded"
+        },
+        "imageFiles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "download_url": {
+                "type": "string",
+                "description": "the attachment's download URL, supplied by the client"
+              },
+              "file_id": {
+                "type": "string",
+                "description": "the client's id for the attachment"
+              },
+              "mime_type": {
+                "type": "string",
+                "description": "the attachment's media type, when the client knows it"
+              },
+              "file_name": {
+                "type": "string",
+                "description": "the attachment's original filename, when the client knows it"
+              }
+            },
+            "required": [
+              "download_url",
+              "file_id"
+            ],
+            "additionalProperties": false
+          },
+          "description": "1 to 5 photographs the user attached to the conversation, all of the SAME person"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "describe the ONE character to generate, 1-1000 characters"
+        },
+        "refine": {
+          "type": "boolean",
+          "description": "run the refine pass for higher fidelity (default true). Send false ONLY when the user asks for a faster or cheaper character"
+        },
+        "visibility": {
+          "type": "string",
+          "description": "private (default), unlisted, or public in the user's PINOC library"
+        }
+      },
+      "additionalProperties": false
+    },
+    "name": "generate_character"
+  },
+  {
+    "_meta": {
+      "openai/fileParams": [
+        "panoramaFile",
+        "referenceImageFile"
+      ]
+    },
+    "annotations": {
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": true,
+      "readOnlyHint": false
+    },
+    "description": "Generate a SCENE - a place a character can stand in - from a description, a photograph, or a panorama the user already has. COSTS CREDITS: 5 to build it, and then PINOC improves the scene on its own - up to 2 automatic expand passes at 3 each, so a scene settles at UP TO 11. The expands are a CEILING, not a certainty: each pass searches the finished scene first, and a pass that finds nothing worth filling submits nothing and is charged nothing. THE SCENE ITSELF COMES BACK QUICKLY - roughly 10 to 30 seconds - and the expand passes land over the couple of minutes after that, so a scene that already reads as ready keeps improving for a short while. Returns a task id immediately; poll it with wait_for_tasks using kind \"environment\". IF THE USER HAS AN EQUIRECTANGULAR PANORAMA, hand it over as a panorama rather than as a reference: that path skips synthesis entirely and reconstructs what they actually have, which is both faster and far more faithful. A reference photograph GUIDES a new panorama rather than being used as one, AND NEEDS NO PROMPT: leave the prompt out and the photograph is described for you, which is the right call when the user handed over a picture rather than words. THE AUTOMATIC PASSES ARE A CEILING OF 2 AND NOT THE END OF IT: suggest_environment_views then says whether anything is still worth filling and expand_environment fills a view you choose, for as long as the user wants. IF YOU INTEND TO FILL THE PLACE YOURSELF, pass autoExpand false - the scene then arrives raw, sooner and for 5, and every fill is one you aimed instead of two aimed by a search nobody looked at. The scene can also be previewed and expanded by hand in the PINOC web app (https://viggle.ai/pinoc/app). If the user ATTACHED a panorama to the conversation, pass it as panoramaFile and nothing else is needed; an ordinary photograph they attached goes in referenceImageFile. Only when you hold a file the client cannot attach: call prepare_upload, run the curl it returns, and pass the resulting key as panoramaUploadKey or referenceUploadKey.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "what the PLACE looks like, in plain language: \"a sunlit Scandinavian pine forest with a dirt path\", at most 1000 characters. Required ONLY when you pass no image: alongside a reference photograph it guides the result and is optional (leave it out and the photograph is described for you), and a panorama needs no prompt at all"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "what to call it in the user's library. Defaults to a name made from the prompt"
+        },
+        "panoramaFile": {
+          "type": "object",
+          "properties": {
+            "download_url": {
+              "type": "string",
+              "description": "the attachment's download URL, supplied by the client"
+            },
+            "file_id": {
+              "type": "string",
+              "description": "the client's id for the attachment"
+            },
+            "mime_type": {
+              "type": "string",
+              "description": "the attachment's media type, when the client knows it"
+            },
+            "file_name": {
+              "type": "string",
+              "description": "the attachment's original filename, when the client knows it"
+            }
+          },
+          "description": "a finished 2:1 equirectangular panorama the user attached to the conversation. This SKIPS synthesis and reconstructs the place directly - prefer it over every other arm whenever the user has one",
+          "required": [
+            "download_url",
+            "file_id"
+          ],
+          "additionalProperties": false
+        },
+        "referenceImageFile": {
+          "type": "object",
+          "properties": {
+            "download_url": {
+              "type": "string",
+              "description": "the attachment's download URL, supplied by the client"
+            },
+            "file_id": {
+              "type": "string",
+              "description": "the client's id for the attachment"
+            },
+            "mime_type": {
+              "type": "string",
+              "description": "the attachment's media type, when the client knows it"
+            },
+            "file_name": {
+              "type": "string",
+              "description": "the attachment's original filename, when the client knows it"
+            }
+          },
+          "description": "an ordinary photograph the user attached to the conversation, to build the place FROM. It guides a newly synthesised panorama rather than being used as one",
+          "required": [
+            "download_url",
+            "file_id"
+          ],
+          "additionalProperties": false
+        },
+        "panoramaUploadKey": {
+          "type": "string",
+          "description": "a finished 2:1 equirectangular panorama as an uploadKey from prepare_upload. Only for a file the client cannot attach; an attached panorama goes in panoramaFile"
+        },
+        "referenceUploadKey": {
+          "type": "string",
+          "description": "an ordinary photograph as an uploadKey from prepare_upload. Only for a file the client cannot attach; an attached photograph goes in referenceImageFile"
+        },
+        "quality": {
+          "type": "string",
+          "description": "panorama tier: low, medium or high. Omit it unless the user asks - the server's default is the one to use, and a lower tier buys speed with reconstruction quality"
+        },
+        "autoExpand": {
+          "type": "boolean",
+          "description": "whether PINOC should spend its own automatic expand passes on the finished scene. Leave it out (the default is on) unless you intend to expand the scene yourself with suggest_environment_views and expand_environment - pass false then, and the scene arrives raw, sooner and cheaper, with every fill aimed by you"
+        }
+      },
+      "additionalProperties": false
+    },
+    "name": "generate_environment"
+  },
+  {
+    "annotations": {
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": true,
+      "readOnlyHint": false
+    },
+    "description": "Generate a NEW animation clip from a text description. COSTS CREDITS (1 per second of clip) and takes minutes. Call list_motion_library first and only come here when nothing in it fits - a clip that is nearly right is worse than a generated one that is right, but a library clip that IS right is free. Returns a task id immediately and does not wait; poll it with wait_for_tasks. Produces 4 samples of the prompt for one price. This makes a skeleton animation, never a body - use generate_character for that.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "what the body should do, in plain language: \"a slow confident walk cycle\". Describe the MOVEMENT, not the character"
+        },
+        "durationSeconds": {
+          "type": "number",
+          "description": "clip length, 1 to 60 seconds (default 5). This is the billed length"
+        },
+        "rewritePrompt": {
+          "type": [
+            "null",
+            "boolean"
+          ],
+          "description": "let PINOC sharpen the prompt before generating (default true). Turn it off only when the user gave wording they want kept verbatim"
+        },
+        "visibility": {
+          "type": "string",
+          "description": "private (default), unlisted, or public in the user's PINOC library"
+        }
+      },
+      "required": [
+        "prompt"
+      ],
+      "additionalProperties": false
+    },
+    "name": "generate_motion"
+  },
+  {
+    "_meta": {
+      "openai/fileParams": [
+        "videoFile"
+      ]
+    },
+    "annotations": {
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "openWorldHint": true,
+      "readOnlyHint": false
+    },
+    "description": "Extract a NEW animation clip from a video of one person moving - motion capture from footage, so the result is THAT performance rather than an interpretation of a description. COSTS CREDITS: 1 per second of footage extracted, the whole video unless trimmed. Takes minutes. Returns a task id immediately and does not wait; poll it with wait_for_tasks. The video must show one person with their body in frame; a clip with no person in it fails and is refunded. Nothing about the person's appearance is kept - this makes a skeleton animation, never a body. If the user ATTACHED the video to the conversation, pass it as videoFile and nothing else is needed. Only when you hold a file the client cannot attach: call prepare_upload, run the curl it returns, and pass the uploadKey here.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uploadKey": {
+          "type": "string",
+          "description": "uploadKey from prepare_upload, after the PUT it described has succeeded"
+        },
+        "videoFile": {
+          "type": "object",
+          "properties": {
+            "download_url": {
+              "type": "string",
+              "description": "the attachment's download URL, supplied by the client"
+            },
+            "file_id": {
+              "type": "string",
+              "description": "the client's id for the attachment"
+            },
+            "mime_type": {
+              "type": "string",
+              "description": "the attachment's media type, when the client knows it"
+            },
+            "file_name": {
+              "type": "string",
+              "description": "the attachment's original filename, when the client knows it"
+            }
+          },
+          "description": "a video the user attached to the conversation",
+          "required": [
+            "download_url",
+            "file_id"
+          ],
+          "additionalProperties": false
+        },
+        "trimStartSeconds": {
+          "type": "number",
+          "description": "seconds into the video to start extracting from (default 0)"
+        },
+        "trimDurationSeconds": {
+          "type": "number",
+          "description": "seconds to keep from trimStartSeconds (default: until the end). This is the billed length, rounded up to whole seconds. Check the clip's length before submitting and set this to avoid billing an untrimmed minutes-long clip"
+        },
+        "visibility": {
+          "type": "string",
+          "description": "private (default), unlisted, or public in the user's PINOC library"
+        }
+      },
+      "additionalProperties": false
+    },
+    "name": "generate_motion_from_video"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Look up a motion or character by its asset id: name, visibility, prompt, and every downloadable format with a signed URL - without downloading anything. Some formats are listed as onDemand WITHOUT a URL, because PINOC builds them on request and keeps them after: a motion's splat-skeleton files. Every character tier it lists is already built. Never tell anyone a format is unavailable because it has no URL here. Pick by purpose: splat-skeleton-glb for the web Splat Engine, splat-skeleton-fbx for Unity (com.viggle.splat-engine 0.2.2+, face included), mixamo-glb or mixamo-fbx for other rigs and DCC tools; on a character `high` is the default and `performance` is for crowds and mobile. Use it to see what an asset carries before spending time and disk on a file that can run to tens of megabytes. Present the selected signed URL as a clickable download link. These URLs EXPIRE; call get_asset again if a fresh link is needed. For a download-link request, no shell download is required. Only save a local copy when the user requests it or a workflow needs the file. If local network access is blocked, still provide the returned link; a local fetch failure alone does not show that the user's download link is broken. Do not embed an expiring URL in a permanent page: that workflow needs a saved file. Holding more than one id? Call get_assets with all of them at once instead of calling this repeatedly.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "assetPublicId": {
+          "type": "string",
+          "description": "the asset's UUID, from take_library_motion, wait_for_tasks or list_motion_library. NOT a task id"
+        },
+        "format": {
+          "type": "string",
+          "description": "optional: one format to get a URL for. Required for a format listed as onDemand (a motion's splat-skeleton files), which has no URL until it is built: naming it starts the build and returns the URL, or an exportId to wait on with wait_for_tasks. A scene has one file and no format to choose, so leave this out for one"
+        }
+      },
+      "required": [
+        "assetPublicId"
+      ],
+      "additionalProperties": false
+    },
+    "name": "get_asset"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Look up SEVERAL assets by id in one call - the same thing get_asset does, for a list. Prefer it whenever you hold more than one id: it fetches them in parallel and says what opens each format ONCE for the whole batch rather than repeating it per asset. Up to 25 ids per call; more than that is refused, so split the list. An id that does not resolve fails on its own and the other assets are still returned - check `errors` for the misses. The URLs EXPIRE, same as get_asset's.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "assetPublicIds": {
+          "type": [
+            "null",
+            "array"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "the asset UUIDs to look up, from take_library_motion(s), wait_for_tasks or list_motion_library. NOT task ids. Repeats are collapsed"
+        }
+      },
+      "required": [
+        "assetPublicIds"
+      ],
+      "additionalProperties": false
+    },
+    "name": "get_assets"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "description": "The user's credit balance and what each paid tool costs. Free and instant. Call it before a generation when the balance matters - being refused mid-way through a multi-asset job is worse than knowing first - and to answer the user when they ask what something will cost.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "name": "get_credit_balance"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "description": "List PINOC's curated motion library - hand-cleaned animation clips that are FREE to use and land in seconds. Always call this BEFORE generating a motion: generating costs the user credits and takes minutes, while taking a library clip costs nothing. Returns every clip with its keywords; read the list and judge which one fits, since nothing here searches or ranks on your behalf.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "name": "list_motion_library"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "description": "List Gaussian splat characters from the user's latest 50 character library entries, excluding uploaded meshes. Free, instant, no credits. Returns names, asset ids, and hasMore when older library entries exist.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "name": "list_my_characters"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "description": "List the scenes - the PLACES - this user has made. Free, no credits. A scene is a Gaussian-splat reconstruction of a location that a character can be put in; it is the third asset kind beside motions and characters. Each entry says which way DOWN is in its file (downAxis), which the two eras of this pipeline disagree about.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "name": "list_my_environments"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "description": "List up to 50 of the user's latest motion library entries - the same thing that list_motion_library does, for the user's own motion library. Free, instant, no credits. Returns names, asset ids, keywords, and hasMore when older entries exist",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "name": "list_my_motions"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Get a presigned URL to upload ONE local video or image so a remote PINOC server can use it. Free, instant, no credits. Returns an uploadKey plus a curl command; run the command from your shell, then pass the uploadKey to the generate tool. The upload URL expires in 6 hours; uploaded files are available for 1 day.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string",
+          "description": "the file's name with extension, e.g. dance.mp4"
+        },
+        "sizeBytes": {
+          "type": "integer",
+          "description": "exact file size in bytes, from stat or ls -l"
+        }
+      },
+      "required": [
+        "filename",
+        "sizeBytes"
+      ],
+      "additionalProperties": false
+    },
+    "name": "prepare_upload"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Semantic search over the user's own motions, characters and scenes, by name or description, e.g. \"red knight\", \"sad walk\" or \"pine forest\". Free, no credits. Prefer this over list_my_motions / list_my_characters / list_my_environments when looking for something specific. A matched scene comes back with its splat file and the facts needed to place it, so it needs no second call.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "a name or description to find"
+        },
+        "kind": {
+          "type": "string",
+          "description": "search only this kind (default: all three): character, motion, scene",
+          "enum": [
+            "character",
+            "motion",
+            "scene"
+          ]
+        },
+        "limit": {
+          "type": "integer",
+          "description": "max results per kind, 1-20 (default 8)"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    },
+    "name": "search_library"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "description": "List the camera views worth filling in one of the user's scenes, best first, each with the share of its frame that is MISSING and the share that is too BLURRED to look at. FREE, no credits, and it changes nothing - but the first call on a scene takes a few seconds, because it is the call that measures it. A scene is reconstructed from one viewpoint, so whatever that point could not see is a hole the moment a camera moves; this is where those holes are. Call it before expand_environment, always: it is the only way to aim a fill here, and the ids it prints are what expand_environment takes. AN EMPTY ANSWER IS THE SUCCESS CONDITION, not a failure - only a view worth a generation is kept at all, so nothing on offer means the place is good enough and you should stop.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "assetPublicId": {
+          "type": "string",
+          "description": "the scene's UUID, from a finished generate_environment task, list_my_environments or search_library. A scene id, NOT a task id"
+        }
+      },
+      "required": [
+        "assetPublicId"
+      ],
+      "additionalProperties": false
+    },
+    "name": "suggest_environment_views"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Take one named clip from the curated motion library. Free, instant, no credits, no task to poll - it returns an asset id you can download immediately. A name that does not match FAILS and lists near misses rather than generating something similar: a typo should cost you a second, not a paid generation. Taking more than one clip? Call take_library_motions with all the names at once instead of calling this repeatedly.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "the clip's displayName exactly as list_motion_library printed it (case and spacing are forgiven), or its assetPublicId"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "name": "take_library_motion"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Take SEVERAL named clips from the curated motion library in one call - the same thing take_library_motion does, for a list. Prefer it whenever you want more than one clip: it reads the catalogue once instead of once per name, and says the format guidance once instead of once per clip. Up to 25 names per call; more than that is refused, so split the list. A name that does not match fails on its own and the other clips are still returned - check `errors` for the misses. Free, instant, no credits.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "names": {
+          "type": [
+            "null",
+            "array"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "the clips to take, each a displayName exactly as list_motion_library printed it (case and spacing are forgiven) or an assetPublicId. Repeats are collapsed"
+        }
+      },
+      "required": [
+        "names"
+      ],
+      "additionalProperties": false
+    },
+    "name": "take_library_motions"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Poll one or more generation tasks for a bounded time and report where they got to. Use this instead of writing your own poll loop or sleeping. It returns within timeoutSeconds with whatever has happened by then. A character or a motion takes MINUTES, so several calls in a row is the normal shape there; a scene is back in roughly 10-30 s and usually needs one. A task still running is never a reason to start another one. Reports each task as ready (with the asset ids it produced), running, or failed (with the error, and those credits already refunded). Also waits on an on-demand export build: pass kind \"export\" with the exportId that get_asset or download_asset returned; ready reports the built files' URLs. For a ready generation: Call get_asset with the returned assetPublicId (not the taskId), then present the selected signed URL as a clickable download link. This PINOC server is remote: download_asset cannot write to your disk, and a download-link request does not require a local file.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "tasks": {
+          "type": [
+            "null",
+            "array"
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "description": "motion, video_motion, character or environment - whichever tool started it - or export for an exportId from get_asset or download_asset"
+              },
+              "taskId": {
+                "type": "string",
+                "description": "the taskId returned by the generating tool, or the exportId"
+              }
+            },
+            "required": [
+              "kind",
+              "taskId"
+            ],
+            "additionalProperties": false
+          },
+          "description": "the tasks to poll, up to 20. Poll them together rather than one at a time"
+        },
+        "timeoutSeconds": {
+          "type": [
+            "null",
+            "integer"
+          ],
+          "description": "how long to wait before reporting back, 0 to 90 (default 45). 0 checks once and returns"
+        }
+      },
+      "required": [
+        "tasks"
+      ],
+      "additionalProperties": false
+    },
+    "name": "wait_for_tasks"
+  }
+]
