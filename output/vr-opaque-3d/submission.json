@@ -1,0 +1,12 @@
+{
+  "taskId": "8fc114e2-9344-4539-91b7-b716d015425d",
+  "kind": "character",
+  "images": [
+    "user_upload_temp/pinoc/69f54b1ab0c06d2aae50f50f08ff2857.png",
+    "user_upload_temp/pinoc/bd97921028fefa830d2f7aa05a0370f7.png",
+    "user_upload_temp/pinoc/9a62306a8c5fbbc442d2735e238f2b07.png"
+  ],
+  "refine": true,
+  "creditsCharged": 10,
+  "nextSteps": "Credits are charged at submit, so this generation is already paid for - do NOT call generate_character again for the same images. Poll it with wait_for_tasks {kind:\"character\", taskId:\"8fc114e2-9344-4539-91b7-b716d015425d\"}. It takes minutes, so expect several rounds; tell the user it is running rather than blocking silently."
+}

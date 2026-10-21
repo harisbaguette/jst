@@ -1,0 +1,100 @@
+{
+  "package": "vr-woman-opaque-3d",
+  "files": [
+    {
+      "path": "characters/vr-woman-opaque.vsplat",
+      "bytes": 1303792,
+      "sha256": "b33d4b313f5e85bd8be9ff4dc692d8d089299f1f632958939b574f5832493eba"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3413,
+      "sha256": "20fd049c1c4d5472dde3678a7dffb1355a44159b105aeacc16e4ef0fe62cfabb"
+    },
+    {
+      "path": "generation.json",
+      "bytes": 1189,
+      "sha256": "ca8737bdb40d9ea181ab285cd3a9cde21f6f9fa21a170e3e466fb23ae88cd7af"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 302,
+      "sha256": "58f90f769a3dac8f41ee56a59e10f06ffaa4808f86b36db0c17730b79797438f"
+    },
+    {
+      "path": "motions/idle.glb",
+      "bytes": 835316,
+      "sha256": "3e1a1f209615e6dea940a66ce548f4e1052d434e5a34810a5c07d88b24ce2bb7"
+    },
+    {
+      "path": "motions/walk.glb",
+      "bytes": 1391912,
+      "sha256": "a0293881af7a74e616d436252d5a2447b6fee0486335a19f9405fc9d4c7fb489"
+    },
+    {
+      "path": "motions/run.glb",
+      "bytes": 529868,
+      "sha256": "1902fd18bc3f2aaef42fe77415c642d78c2b213f2bf41ba79f86ea761912d8a3"
+    },
+    {
+      "path": "references/13-outfit-front.png",
+      "bytes": 1814560,
+      "sha256": "a8d69e4baafd7addced593283d2e055b6ab4eacebd973e168f1f4fc25acf5b9d"
+    },
+    {
+      "path": "references/13-outfit-front.prompt.txt",
+      "bytes": 1609,
+      "sha256": "1f2678a7bef12d907e6842d57f4c851d97e9c215723448987315e31507b1fdb0"
+    },
+    {
+      "path": "references/14-outfit-side.png",
+      "bytes": 1593272,
+      "sha256": "76e49797d3cc26689df2956d96168fe430eb30c3d89674c4f01ea2e6ec4e39ba"
+    },
+    {
+      "path": "references/14-outfit-side.prompt.txt",
+      "bytes": 2141,
+      "sha256": "3f087805adb85e5ec18ee11d450dddaa03e462bff36ee51cc50f1d5f201ac651"
+    },
+    {
+      "path": "references/15-outfit-back.png",
+      "bytes": 1798955,
+      "sha256": "74d2d1a698156316601f762e967a567c9610e270b58f93a24f6eed7151ae25fe"
+    },
+    {
+      "path": "references/15-outfit-back.prompt.txt",
+      "bytes": 1301,
+      "sha256": "ac332a5150b907308a77691ba915935b72619c798e106bc789a4cb3c39f9bca0"
+    },
+    {
+      "path": "previews/model-front.png",
+      "bytes": 384928,
+      "sha256": "545b11f3b408146ce98d818570edcdc82e3e29196b19286db1d11218cb6f8bfa"
+    },
+    {
+      "path": "previews/model-side.png",
+      "bytes": 344326,
+      "sha256": "34898d4d60f002a1d17eba38a11aa2602a63d634b53ede3f869fb7bea17bde42"
+    },
+    {
+      "path": "previews/model-back.png",
+      "bytes": 376006,
+      "sha256": "b53e96d5417ca93bd9f60eed82de67d26563874a79d4e39777a9a59d23576db6"
+    },
+    {
+      "path": "previews/face-comparison.png",
+      "bytes": 929525,
+      "sha256": "1210513629d8808d26fa60f020ca3480281e0fc772719da7551be809b07698fb"
+    },
+    {
+      "path": "previews/motion-run.png",
+      "bytes": 370154,
+      "sha256": "5dbc9716b6d963f34a5960d2926b705ea1977f8d609e686670ea1e8214ea781b"
+    },
+    {
+      "path": "previews/mobile.png",
+      "bytes": 125356,
+      "sha256": "4688f298a0dada72c9a8ec2f18643ba728ec25ce4ab8bd1ae38ee7e442968995"
+    }
+  ]
+}

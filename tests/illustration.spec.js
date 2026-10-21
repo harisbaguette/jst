@@ -5,7 +5,7 @@ test('일러스트 3D와 원본이 함께 바뀌고 회전·전신 동작이 재
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await mkdir('output/illustration', { recursive: true });
-  await page.goto('/');
+  await page.goto('/?model=illustration');
   await expect(page.locator('#status')).toHaveText('동작 재생 가능', { timeout: 90_000 });
   await expect(page.locator('#model-select')).toHaveValue('illustration');
   await expect(page.locator('#model-select option:checked')).toHaveText('일러스트 · 3장');

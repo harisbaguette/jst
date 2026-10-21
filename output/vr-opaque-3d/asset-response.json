@@ -1,0 +1,10 @@
+{
+  "assetPublicId": "ff4dd217-8bf1-45ad-b958-75ce42302006",
+  "kind": "character",
+  "displayName": "69f54b1ab0c06d2aae50f50f08ff2857",
+  "format": "high",
+  "description": "VIGGCHAR v1 at 48,000 gaussians - the tier the PINOC viewer loads. The default: prefer it unless you have a reason.",
+  "status": "ready",
+  "nextSteps": "Present the selected signed URL as a clickable download link. These URLs EXPIRE; call get_asset again if a fresh link is needed. For a download-link request, no shell download is required. Only save a local copy when the user requests it or a workflow needs the file. If local network access is blocked, still provide the returned link; a local fetch failure alone does not show that the user's download link is broken. Do not embed an expiring URL in a permanent page: that workflow needs a saved file. A .vsplat is Gaussian splats with bone weights, NOT a mesh: no glTF or FBX importer opens it. It renders only through the Viggle Splat Engine - in Unity, the com.viggle.splat-engine package (tarball and install guide: https://viggle.ai/pinoc/app/plugin); on the web, `npm install @viggle/splat-engine playcanvas@2.18.0`. The engine plays this server's splat-skeleton motion clips against it (splat-skeleton-glb on the web, splat-skeleton-fbx in Unity). Every asset can also be previewed and edited in the PINOC web app at https://viggle.ai/pinoc/app.",
+  "localFile": "public/characters/vr-woman-opaque.vsplat"
+}

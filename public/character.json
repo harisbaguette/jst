@@ -1,6 +1,6 @@
 {
   "name": "서아",
-  "model": "/characters/seoah-illustration.vsplat",
+  "model": "/characters/vr-woman-opaque.vsplat",
   "models": [
     {
       "id": "original",
@@ -16,6 +16,11 @@
       "id": "illustration",
       "label": "일러스트 · 3장",
       "url": "/characters/seoah-illustration.vsplat"
+    },
+    {
+      "id": "vr-opaque",
+      "label": "단발 · 흰 상의 · 3장",
+      "url": "/characters/vr-woman-opaque.vsplat"
     }
   ],
   "motions": [
@@ -35,5 +40,5 @@
       "url": "/motions/run.glb"
     }
   ],
-  "defaultModel": "illustration"
+  "defaultModel": "vr-opaque"
 }

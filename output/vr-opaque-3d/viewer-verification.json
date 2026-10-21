@@ -1,0 +1,20 @@
+{
+  "modelId": "vr-opaque",
+  "splats": 48000,
+  "motions": [
+    "idle",
+    "walk",
+    "run"
+  ],
+  "restViews": [
+    "front",
+    "side",
+    "back"
+  ],
+  "faceComparison": true,
+  "modelSwitch": true,
+  "mobileWidth": 390,
+  "horizontalOverflow": false,
+  "pageErrors": [],
+  "result": "pass"
+}

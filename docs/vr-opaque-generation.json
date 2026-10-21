@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-21",
+  "state": "verified",
+  "inputs": [
+    "assets/characters/vr-woman-opaque-v1/13-outfit-front.png",
+    "assets/characters/vr-woman-opaque-v1/14-outfit-side.png",
+    "assets/characters/vr-woman-opaque-v1/15-outfit-back.png"
+  ],
+  "inputSha256": [
+    "a8d69e4baafd7addced593283d2e055b6ab4eacebd973e168f1f4fc25acf5b9d",
+    "76e49797d3cc26689df2956d96168fe430eb30c3d89674c4f01ea2e6ec4e39ba",
+    "74d2d1a698156316601f762e967a567c9610e270b58f93a24f6eed7151ae25fe"
+  ],
+  "options": {
+    "refine": true,
+    "visibility": "private"
+  },
+  "balanceBefore": 30,
+  "taskId": "8fc114e2-9344-4539-91b7-b716d015425d",
+  "creditsCharged": 10,
+  "assetPublicId": "ff4dd217-8bf1-45ad-b958-75ce42302006",
+  "format": "high",
+  "model": "public/characters/vr-woman-opaque.vsplat",
+  "bytes": 1303792,
+  "sha256": "b33d4b313f5e85bd8be9ff4dc692d8d089299f1f632958939b574f5832493eba",
+  "balanceAfter": 20,
+  "splats": 48000,
+  "validation": {
+    "viewerTestsPassed": 7,
+    "authRefreshTestsPassed": 3,
+    "build": "passed",
+    "visualReview": "full body, side, back, face, running, mobile inspected",
+    "vrHeadset": "not_tested"
+  }
+}

@@ -1,6 +1,7 @@
 import './style.css';
 import sourceImage from '../assets/characters/seoah-front.png';
 import illustrationImage from '../assets/characters/seoah-illustration-front.png';
+import opaqueOutfitImage from '../assets/characters/vr-woman-opaque-v1/13-outfit-front.png';
 import { bindRenderResolution } from './render-resolution.js';
 
 const $ = (id) => document.getElementById(id);
@@ -14,6 +15,26 @@ let restPose = false;
 let currentModel = {};
 const bodyCamera = { distance: 3.8, pitch: 8, yaw: 0, target: { x: 0, y: .85, z: 0 } };
 const faceCamera = { distance: .95, pitch: 0, yaw: 0, target: { x: 0, y: 1.52, z: 0 } };
+const sourceReferences = {
+  illustration: {
+    image: illustrationImage,
+    alt: '아이보리 상의와 청록 치마를 입은 성인 여성 캐릭터의 정면 전신 일러스트',
+    description: '25세 · 일러스트 캐릭터',
+    note: '정면·측면·후면 3장으로 생성했습니다. 얼굴 비교에서 원본과 확인할 수 있습니다.',
+  },
+  'vr-opaque': {
+    image: opaqueOutfitImage,
+    alt: '흰 U넥 긴팔, 짧은 차콜 치마, 검정 스타킹과 리본 플랫을 착용한 단발 성인 여성 캐릭터',
+    description: '한국인 · 25세 · 단발 캐릭터',
+    note: '흰 상의 착용 정면·측면·후면 3장으로 생성했습니다. 얼굴과 의상은 원본과 차이가 있습니다.',
+  },
+};
+const defaultSourceReference = {
+  image: sourceImage,
+  alt: '아이보리 상의와 회색 바지를 입은 여성 캐릭터 서아의 정면 전신 원본',
+  description: '한국인 · 25세 · 가상 캐릭터',
+  note: '원본과 얼굴·피부 질감에 차이가 남아 있습니다. 얼굴 비교에서 확대해 확인할 수 있습니다.',
+};
 
 function notice(title, message, retry = false) {
   $('notice').hidden = false;
@@ -103,15 +124,11 @@ async function load() {
     $('model-select').value = models.some(model => model.id === selected) ? selected : models[0].id;
     const model = models.find(model => model.id === $('model-select').value);
     currentModel = model;
-    const isIllustration = model.id === 'illustration';
-    $('source-image').src = $('source-link').href = isIllustration ? illustrationImage : sourceImage;
-    $('source-image').alt = isIllustration
-      ? '아이보리 상의와 청록 치마를 입은 성인 여성 캐릭터의 정면 전신 일러스트'
-      : '아이보리 상의와 회색 바지를 입은 여성 캐릭터 서아의 정면 전신 원본';
-    $('character-description').textContent = isIllustration ? '25세 · 일러스트 캐릭터' : '한국인 · 25세 · 가상 캐릭터';
-    $('model-note').textContent = isIllustration
-      ? '정면·측면·후면 3장으로 생성했습니다. 얼굴 비교에서 원본과 확인할 수 있습니다.'
-      : '원본과 얼굴·피부 질감에 차이가 남아 있습니다. 얼굴 비교에서 확대해 확인할 수 있습니다.';
+    const reference = sourceReferences[model.id] || defaultSourceReference;
+    $('source-image').src = $('source-link').href = reference.image;
+    $('source-image').alt = reference.alt;
+    $('character-description').textContent = reference.description;
+    $('model-note').textContent = reference.note;
     document.documentElement.style.setProperty('--face-source-height', model.faceSourceHeight || '279.2727%');
     document.documentElement.style.setProperty('--face-source-top', model.faceSourceTop || '5.4545%');
     $('model-options').hidden = models.length < 2;
