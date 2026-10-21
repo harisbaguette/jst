@@ -7,7 +7,7 @@ test('실제 캐릭터와 동작 재생, 정지, 카메라 조작', async ({ pag
   await page.goto('/');
   await expect(page.locator('#status')).toHaveText('동작 재생 가능', { timeout: 90_000 });
   const splats = await page.evaluate(() => window.jst.character.splat.numSplats);
-  expect(splats).toBeGreaterThan(1000);
+  expect(splats).toBe(48000);
   await mkdir('output/verification', { recursive: true });
 
   for (const motion of ['idle', 'walk', 'run']) {

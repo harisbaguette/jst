@@ -1,0 +1,110 @@
+[
+  {
+    "name": "high-rest-dpr1",
+    "tier": "high",
+    "pose": "rest",
+    "ratio": 1,
+    "splats": 48000,
+    "animation": null,
+    "resolution": {
+      "width": 500,
+      "height": 425,
+      "cssWidth": 1000,
+      "cssHeight": 850
+    },
+    "errors": []
+  },
+  {
+    "name": "full-rest-dpr1",
+    "tier": "full",
+    "pose": "rest",
+    "ratio": 1,
+    "splats": 131072,
+    "animation": null,
+    "resolution": {
+      "width": 500,
+      "height": 425,
+      "cssWidth": 1000,
+      "cssHeight": 850
+    },
+    "errors": []
+  },
+  {
+    "name": "high-idle-dpr1",
+    "tier": "high",
+    "pose": "idle",
+    "ratio": 1,
+    "splats": 48000,
+    "animation": "idle",
+    "resolution": {
+      "width": 500,
+      "height": 425,
+      "cssWidth": 1000,
+      "cssHeight": 850
+    },
+    "errors": []
+  },
+  {
+    "name": "high-rest-dpr2",
+    "tier": "high",
+    "pose": "rest",
+    "ratio": 2,
+    "splats": 48000,
+    "animation": null,
+    "resolution": {
+      "width": 1000,
+      "height": 850,
+      "cssWidth": 1000,
+      "cssHeight": 850
+    },
+    "errors": []
+  },
+  {
+    "name": "high-rest-corrected",
+    "tier": "high",
+    "pose": "rest",
+    "ratio": 2,
+    "corrected": true,
+    "splats": 48000,
+    "animation": null,
+    "resolution": {
+      "width": 2000,
+      "height": 1700,
+      "cssWidth": 1000,
+      "cssHeight": 850
+    },
+    "errors": []
+  },
+  {
+    "name": "full-rest-corrected",
+    "tier": "full",
+    "pose": "rest",
+    "ratio": 2,
+    "corrected": true,
+    "splats": 131072,
+    "animation": null,
+    "resolution": {
+      "width": 2000,
+      "height": 1700,
+      "cssWidth": 1000,
+      "cssHeight": 850
+    },
+    "errors": []
+  },
+  {
+    "name": "high-idle-corrected",
+    "tier": "high",
+    "pose": "idle",
+    "ratio": 2,
+    "corrected": true,
+    "splats": 48000,
+    "animation": "idle",
+    "resolution": {
+      "width": 2000,
+      "height": 1700,
+      "cssWidth": 1000,
+      "cssHeight": 850
+    },
+    "errors": []
+  }
+]

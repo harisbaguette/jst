@@ -1,67 +1,61 @@
 # JST 캐릭터 스튜디오
 
-실사풍의 가상 한국인 25세 여성 **서아**를 이미지로 만들고, PINOC(JST-2)로 움직이는 3D 캐릭터로 변환했다. 대기·걷기·달리기, 시점 회전, 확대·축소, 일시정지와 재생 속도 조절을 지원한다.
+가상의 한국인 25세 여성 **서아**를 이미지로 만들고 PINOC(JST-2)로 움직이는 3D 캐릭터로 변환한 실험이다. **현재 모델은 원본 얼굴 유사성과 실사감 기준에 미달한다.** 동작 재생 성공과 실사급 완성을 구분한다.
 
-## 실행
+## 보기
 
 ```sh
-npm install
+npm ci
 npm run dev
 ```
 
-http://127.0.0.1:5178/ 에 접속한다. 캐릭터와 동작 파일을 프로젝트에 저장했으므로 미리보기에는 PINOC 로그인이나 API 키가 필요 없다.
+http://127.0.0.1:5178/ 에서 본다. 에셋을 로컬에 저장해 미리보기에는 PINOC 로그인이나 API 키가 필요 없다.
 
-## 결과 파일
+- **전신**: 대기·걷기·달리기, 회전·확대, 정지·속도 조절.
+- **얼굴 비교**: 원본 사진의 얼굴 확대와 동작 없는 3D 원형을 나란히 확인. 원본은 새 이미지로 교체하지 않았다.
+- **비교할 모델**: 전신 1장 입력 / 얼굴 참고 추가 실험. 기본은 기존 모델이며, 새 모델을 품질 개선 성공으로 판정하지 않았다.
+- **원형**: 애니메이션을 끈 생성 모델 자체. 사진과 같은 포즈·카메라를 정밀 복원한 것은 아니다.
+
+## 연구와 심사
+
+[실사감 원인·비교 실험·제작 권고](docs/realism-research.md) · [Benan 심사와 수정 기록](docs/benan-review.md)
+
+핵심 결과: 화면 버퍼 크기를 수정해 선명도 저하를 줄였다. 48,000→131,072점 비교와 얼굴 참고 추가 생성에서도 원본 얼굴·피부 디테일은 충분히 복원되지 않았다. 실사급 근접 장면은 얼굴 메시·피부·눈·머리카락을 직접 조절하는 제작 경로가 필요하다는 판단이다.
+
+## 주요 파일
 
 | 파일 | 내용 |
 | --- | --- |
-| `assets/characters/seoah-front.png` | 직접 생성한 1024 × 1536 정면 전신 이미지 |
-| `public/characters/seoah.vsplat` | 정밀 보정 포함 3D 캐릭터, high 등급, 48,000 Gaussian, 약 1.3 MB |
-| `public/motions/idle.glb` | 대기 |
-| `public/motions/walk.glb` | 걷기 |
-| `public/motions/run.glb` | 달리기 |
-| `public/character.json` | 뷰어에서 읽는 로컬 파일 목록 |
-| `output/verification/` | 실제 브라우저 렌더와 동작 검증 화면 |
-| `docs/character-prompt.txt` | 내장 image_gen에 사용한 원본 프롬프트 |
+| `assets/characters/seoah-front.png` | 기준 전신 이미지, 1024×1536 |
+| `assets/characters/seoah-face-reference.png` | 원본을 바탕으로 생성한 얼굴 참고. 관측 자료나 정답 이미지가 아님 |
+| `public/characters/seoah.vsplat` | 기존 모델 high, 48,000점, 1,303,788 bytes |
+| `public/characters/seoah-full.vsplat` | 같은 자산의 full, 131,072점, 3,546,788 bytes. 비교 연구용 |
+| `public/characters/seoah-face-reference.vsplat` | 두 이미지 입력 실험 high, 48,000점, 1,303,804 bytes |
+| `public/motions/` | 무료 대기·걷기·달리기 `splat-skeleton-glb` |
+| `output/research/` | 같은 조건의 모델·해상도 비교, 입력 검증, 측정값 |
+| `output/verification/` | 기능·모바일·얼굴 비교 캡처와 빌드 확인 기록 |
 
-캐릭터는 Gaussian splat 형식이다. 일반 메시용 GLB/FBX 가져오기로는 열리지 않으며, 이 프로젝트에 설치한 Viggle Splat Engine으로 재생한다. 동작 파일은 캐릭터용 MetaHuman 뼈대 애니메이션이며 별도 인체 메시가 없다. 정면 외의 모습은 PINOC가 추정한 결과이고 원본 사진보다 머리카락·손가락 등의 세부가 거칠 수 있다.
-
-## 생성 기록
-
-- 원본 이미지: OpenAI 내장 `image_gen`, 2026-10-21 직접 생성.
-- PINOC 계정 연결: Codex OAuth, 본인 Google 로그인 완료.
-- `generate_character`: 원본 이미지 한 장, `refine: true`, `visibility: private`.
-- 생성 작업: `4063a6a7-2532-4731-ba25-944d1c2d5f6b`.
-- 생성 Asset ID: `181332d0-bf2e-461a-807f-d3aabea86605`.
-- 캐릭터 생성 10크레딧 사용, 동작 3개 0크레딧. 무료 잔액 60 → 50.
-- 다운로드 링크를 앱에 남기지 않고 실제 파일을 내려받았다.
+`.vsplat`은 Gaussian splat이며 일반 인체 메시 GLB/FBX가 아니다. 동작 GLB에는 MetaHuman 뼈대 애니메이션이 있고 별도 인체 메시가 없다. [출처와 생성 조건](ASSETS.md)을 참고한다.
 
 ## 검증
 
 ```sh
 npm run build
 npm test
+# 개발 서버 실행 중, 무료 로컬 비교 캡처
+node scripts/probe-render.mjs
 ```
 
-Playwright의 headless Chromium으로 실제 모델 로딩, 3개 동작 전환과 프레임 진행, 정지·재생·속도 조절, 드래그와 카메라 초기화, 모바일 폭에서의 조작부 표시를 확인한다. 사용자 브라우저나 마우스·키보드 포커스를 조작하지 않는다. 처음 설치한 PC에 테스트용 브라우저가 없다면 `npx playwright install chromium`을 실행한다.
+Playwright headless Chromium으로 모델·동작, 정지·속도, 카메라, 모바일, DPR 2 실제 버퍼, 원형, 모델 왕복 전환, 동작 일부 실패와 모델 재시도를 확인한다. 처음 PC에 테스트용 브라우저가 없으면 `npx playwright install chromium`을 실행한다. 사용자 브라우저나 입력 포커스를 조작하지 않는다.
 
-검증 결과: 빌드 성공, 자동 시험 2개 통과, 빌드된 실행본의 WebGL2 렌더·48,000 Gaussian 로딩·걷기 프레임 진행 확인. 오류 0건. 정면·측면·뒷면 렌더를 직접 확인했다. 기록은 `output/verification/report.json`에 있다.
+자동 시험은 동작과 복구 검증이다. 얼굴 유사성과 실사감은 원본 대조 캡처를 직접 보고 판단했고 **불합격**이다. 빌드에는 엔진 청크 크기와 `node:worker_threads` 브라우저 외부화 경고가 남으며, 브라우저 실행 오류와는 구분한다.
 
-## PINOC에서 추가 작업할 때
+## 생성 기록과 추가 작업
 
-이미 완료한 캐릭터를 보려면 계정 연결을 다시 할 필요가 없다. 추가 생성 등 MCP 작업이 필요한 경우에만 다음을 사용한다.
+기존 모델 Asset ID: `181332d0-bf2e-461a-807f-d3aabea86605`.
+얼굴 참고 추가 실험: `a886542f-93bf-4b31-aa69-601c8a692b20`.
+둘 다 `refine: true`, `visibility: private`로 생성. 각 10크레딧, 누적 20, 확인 잔액 40. 이미 받은 모델의 열람과 비교에는 생성 비용이 없다.
 
-```sh
-python3 scripts/connect-pinoc.py
-python3 scripts/pinoc-mcp.py get_credit_balance
-```
+PINOC MCP가 연결돼 있으면 직접 도구를 사용한다. 별도로 연결해야 할 때만 `python3 scripts/connect-pinoc.py`를 쓴다. 기존 `scripts/pinoc-mcp.py`는 이 Mac의 Codex Keychain에 저장된 PINOC 항목으로 MCP를 호출하는 보조 도구다. 토큰이나 서명된 다운로드 주소를 저장소에 넣지 않는다.
 
-첫 명령은 공식 `codex mcp login pinoc --no-browser`로 연결한다. 두 번째 스크립트는 이 Mac의 Codex Keychain에서 PINOC 인증 항목만 읽어 직접 MCP를 호출한다. 인증 토큰을 프로젝트나 로그에 기록하지 않는다. 토큰 만료 시 공식 로그인 명령으로 다시 연결한다.
-
-## 자료
-
-- [사용자가 제시한 예시](https://x.com/akokoi1/status/2112365119187591189)
-- [PINOC MCP](https://viggle.ai/pinoc/mcp)
-- [이미지 입력 안내](https://viggle.ai/pinoc/image-to-3d-character)
-- [Viggle Splat Engine](https://viggle.ai/pinoc/app/plugin)
-- 에셋 출처: `ASSETS.md`
+[사용자가 준 예시](https://x.com/akokoi1/status/2112365119187591189) · [PINOC MCP](https://viggle.ai/pinoc/mcp) · [Viggle Splat Engine](https://viggle.ai/pinoc/app/plugin)

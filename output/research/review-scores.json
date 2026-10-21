@@ -1,0 +1,43 @@
+{
+  "character": {
+    "weights": {
+      "likeness": 0.35,
+      "realism": 0.35,
+      "motion_and_viewer": 0.2,
+      "verification_and_honesty": 0.1
+    },
+    "before": {
+      "likeness": 4,
+      "realism": 4,
+      "motion_and_viewer": 8,
+      "verification_and_honesty": 3
+    },
+    "after": {
+      "likeness": 4,
+      "realism": 4.5,
+      "motion_and_viewer": 9,
+      "verification_and_honesty": 9
+    },
+    "before_weighted": 4.7,
+    "after_weighted": 5.675
+  },
+  "research": {
+    "weights": {
+      "sources": 0.25,
+      "counterevidence": 0.22,
+      "measurements": 0.18,
+      "inference": 0.15,
+      "perspectives": 0.1,
+      "usefulness": 0.1
+    },
+    "after": {
+      "sources": 9,
+      "counterevidence": 9.5,
+      "measurements": 8.5,
+      "inference": 9.2,
+      "perspectives": 8.5,
+      "usefulness": 9.3
+    },
+    "after_weighted": 9.03
+  }
+}

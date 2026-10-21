@@ -31,3 +31,18 @@ PINOC 연결·기능·비용 안내: https://viggle.ai/pinoc/mcp
 - 취득 형식: `high`, 48,000 Gaussian, 1,303,788 bytes
 - 생성 비용: 10크레딧
 - 생성 결과와 뷰어를 2026-10-21에 확인했다.
+
+## 얼굴 보존·실사감 비교 실험
+
+| 파일 | 출처와 용도 |
+| --- | --- |
+| `assets/characters/seoah-face-reference.png` | OpenAI 내장 image_gen으로 전신 원본을 참조해 생성한 1024×1536 얼굴 클로즈업. 특정 실존 인물 자료 없음. AI가 추정한 세부이며 원본의 실측 복원본이 아님 |
+| `public/characters/seoah-full.vsplat` | 기존 PINOC 자산의 full 단계, 131,072점, 3,546,788 bytes. 점 수 비교용. 추가 생성 비용 없음 |
+| `public/characters/seoah-face-reference.vsplat` | 전신 원본+얼굴 참고를 넣은 실험 자산 `a886542f-93bf-4b31-aa69-601c8a692b20`. high 48,000점, 1,303,804 bytes, refine=true, private |
+| `output/research/provider-source.png` | PINOC get_asset이 반환한 기존 입력 파일. 기준 원본과 SHA-256 동일 |
+| `output/research/provider-preview.webp` | PINOC가 제공한 기존 생성 자산의 미리보기. 로컬 렌더러 이전의 품질 비교용 |
+| `output/research/*.png`, `output/verification/*.png` | 격리된 headless Chromium에서 직접 캡처한 비교·검증 화면. 외부 홍보 이미지 아님 |
+
+2026-10-21 실험. [얼굴 생성 프롬프트](docs/face-reference-prompt.txt), [3D 생성 조건](docs/face-reference-experiment.json)을 보관했다. 추가 생성 10크레딧, 잔액 50→40. 이미지 파일과 모델을 실제 저장했으며 만료되는 서명 URL은 앱에 사용하지 않는다.
+
+새 모델은 실사감 개선 성공으로 판정하지 않았다. 비교 선택지로만 보존하고 기존 모델을 기본값으로 유지한다. 외부 에셋 팩이나 실존 인물 스캔은 이번 작업에 사용하지 않았다.

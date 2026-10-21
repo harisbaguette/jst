@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-21",
+  "hypothesis": "전신 이미지에 고해상도 얼굴 참고 이미지를 더하면 얼굴과 질감 보존이 나아지는가",
+  "baseline": {
+    "assetPublicId": "181332d0-bf2e-461a-807f-d3aabea86605",
+    "images": [
+      "assets/characters/seoah-front.png"
+    ],
+    "refine": true
+  },
+  "experiment": {
+    "taskId": "49874375-f7d7-4ea9-a55e-2afcd00cc98f",
+    "assetPublicId": "a886542f-93bf-4b31-aa69-601c8a692b20",
+    "images": [
+      "assets/characters/seoah-front.png",
+      "assets/characters/seoah-face-reference.png"
+    ],
+    "refine": true,
+    "visibility": "private",
+    "format": "high",
+    "splats": 48000,
+    "bytes": 1303804,
+    "prompt": null
+  },
+  "credits": {
+    "before": 50,
+    "charged": 10,
+    "after": 40,
+    "totalCharacterGenerationCharges": 20
+  },
+  "result": "원본 얼굴과 피부 디테일 미달이 지속됨. 기본 모델 교체하지 않고 실험 선택지로 보존.",
+  "limits": [
+    "보조 얼굴은 AI 추정이며 실제 다각도 관측 자료가 아님",
+    "샘플 1회. 참고 이미지 효과와 생성 랜덤성을 분리할 수 없음",
+    "원본과의 표정·투영 차이가 있어 픽셀 동일성으로 신원 유사도를 판정하지 않음"
+  ],
+  "apiNotes": "uploadKeys와 prompt를 함께 보낸 첫 요청은 invalid_argument로 거절됨. 실제 실행은 uploadKeys 2개만 사용."
+}

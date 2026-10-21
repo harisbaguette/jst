@@ -1,6 +1,10 @@
 {
   "name": "서아",
   "model": "/characters/seoah.vsplat",
+  "models": [
+    { "id": "original", "label": "전신 1장 입력", "url": "/characters/seoah.vsplat" },
+    { "id": "face-reference", "label": "얼굴 참고 추가 · 실험", "url": "/characters/seoah-face-reference.vsplat" }
+  ],
   "motions": [
     {
       "name": "idle",

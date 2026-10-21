@@ -1,14 +1,31 @@
 {
-  "result": {
-    "backend": "webgl2",
-    "splats": 48000,
-    "motion": "walk"
-  },
-  "before": 3.5010000000000012,
-  "after": 25.499999999999993,
-  "errors": [],
+  "date": "2026-10-21",
   "build": "passed",
-  "playwright": "2 passed",
-  "creditsUsed": 10,
-  "creditsRemaining": 50
+  "playwright": "5 passed",
+  "production": {
+    "backend": "webgl2",
+    "original": {
+      "splats": 48000,
+      "animation": null,
+      "canvas": [
+        1440,
+        1848
+      ],
+      "css": [
+        720,
+        924
+      ]
+    },
+    "experiment": {
+      "splats": 48000,
+      "motion": "walk",
+      "before": 20.99699999999999,
+      "after": 35.99399999999998
+    },
+    "errors": []
+  },
+  "visualVerdict": "REJECT: 원본 얼굴 유사성과 실사감 미달. 기능 시험 통과와 구분.",
+  "creditsUsedThisRevision": 10,
+  "creditsUsedTotal": 20,
+  "creditsRemaining": 40
 }

@@ -1,0 +1,14 @@
+{
+  "source_sha256": "486a094da0aaacf9a932e1101638f6a9ef389659d90ec5159ab3ac79eb05b538",
+  "provider_source_sha256": "486a094da0aaacf9a932e1101638f6a9ef389659d90ec5159ab3ac79eb05b538",
+  "full_to_high_splat_ratio": 2.7306666666666666,
+  "full_to_high_bytes_ratio": 2.7203717168742156,
+  "same_pose_face_roi_xyxy": [
+    370,
+    150,
+    630,
+    440
+  ],
+  "high_full_face_mean_absolute_rgb_difference_0_to_255": 1.0558532272325376,
+  "meaning": "같은 시점 high/full 렌더의 픽셀 차이. 얼굴 유사도나 실사감 점수가 아님."
+}
