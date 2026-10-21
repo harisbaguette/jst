@@ -38,7 +38,15 @@ test('실제 캐릭터와 동작 재생, 정지, 카메라 조작', async ({ pag
   await page.locator('#reset').click();
   expect(await page.evaluate(() => window.jst.controls.yaw)).toBe(0);
   await page.locator('[data-motion="idle"]').click();
+  await page.locator('#speed').selectOption('1');
+  await page.waitForTimeout(400);
   await page.screenshot({ path: 'output/verification/desktop.png' });
+  await page.evaluate(() => { window.jst.controls.yaw = 90; });
+  await page.waitForTimeout(200);
+  await page.screenshot({ path: 'output/verification/side.png' });
+  await page.evaluate(() => { window.jst.controls.yaw = 180; });
+  await page.waitForTimeout(200);
+  await page.screenshot({ path: 'output/verification/back.png' });
   expect(errors).toEqual([]);
 });
 

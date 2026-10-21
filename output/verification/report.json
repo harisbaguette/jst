@@ -1,0 +1,14 @@
+{
+  "result": {
+    "backend": "webgl2",
+    "splats": 48000,
+    "motion": "walk"
+  },
+  "before": 3.5010000000000012,
+  "after": 25.499999999999993,
+  "errors": [],
+  "build": "passed",
+  "playwright": "2 passed",
+  "creditsUsed": 10,
+  "creditsRemaining": 50
+}

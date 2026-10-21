@@ -22,3 +22,12 @@ PINOC 연결·기능·비용 안내: https://viggle.ai/pinoc/mcp
 출처: https://viggle.ai/pinoc/app/ — 2026-10-21 MCP로 취득, 동작 비용 0크레딧.
 
 뷰어 엔진: `@viggle/splat-engine@0.2.0` (MIT), `playcanvas@2.18.0` (MIT). 라이선스 원문은 설치 패키지에 포함된다.
+
+## PINOC 캐릭터
+
+`public/characters/seoah.vsplat`: 위에서 생성한 전신 원본을 PINOC(JST-2)에 넣어 정밀 보정 포함으로 생성한 비공개 캐릭터.
+
+- Asset ID: `181332d0-bf2e-461a-807f-d3aabea86605`
+- 취득 형식: `high`, 48,000 Gaussian, 1,303,788 bytes
+- 생성 비용: 10크레딧
+- 생성 결과와 뷰어를 2026-10-21에 확인했다.

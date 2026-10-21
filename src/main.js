@@ -42,7 +42,7 @@ async function load() {
     controls.attach({ canvas: $('canvas'), cameraEntity: scene.cameraEntity });
     scene.app.on('update', () => controls.update());
     SkyDome.create(scene, { topColor: '#eeede8', bottomColor: '#e3e6dc' });
-    Grid.create(scene);
+    Grid.create(scene, { color: '#a9b19f', showAxes: false, strength: .24, fadeStart: 1, fadeEnd: 8 });
     scene.start();
     character = await Character.load(scene, manifest.model);
     character.setPosition(0, 0, 0);
