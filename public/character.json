@@ -1,9 +1,22 @@
 {
   "name": "서아",
-  "model": "/characters/seoah.vsplat",
+  "model": "/characters/seoah-illustration.vsplat",
   "models": [
-    { "id": "original", "label": "전신 1장 입력", "url": "/characters/seoah.vsplat" },
-    { "id": "face-reference", "label": "얼굴 참고 추가 · 실험", "url": "/characters/seoah-face-reference.vsplat" }
+    {
+      "id": "original",
+      "label": "전신 1장 입력",
+      "url": "/characters/seoah.vsplat"
+    },
+    {
+      "id": "face-reference",
+      "label": "얼굴 참고 추가 · 실험",
+      "url": "/characters/seoah-face-reference.vsplat"
+    },
+    {
+      "id": "illustration",
+      "label": "일러스트 · 3장",
+      "url": "/characters/seoah-illustration.vsplat"
+    }
   ],
   "motions": [
     {
@@ -21,5 +34,6 @@
       "label": "달리기",
       "url": "/motions/run.glb"
     }
-  ]
+  ],
+  "defaultModel": "illustration"
 }

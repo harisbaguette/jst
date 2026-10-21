@@ -1,0 +1,64 @@
+{
+  "created": "2026-10-21",
+  "tool": "OpenAI built-in image_gen",
+  "type": "costume-product-reference-sheets",
+  "images": [
+    {
+      "file": "01-outfit-overview.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1825473,
+      "sha256": "61b019c67a9b330d741019ea9ffa426addd91df1834c697e3ee490a99747548b",
+      "prompt": "01-outfit-overview.prompt.txt"
+    },
+    {
+      "file": "02-blouse-construction.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2269803,
+      "sha256": "6bc20b43435294f566884fa850a724bc776e21b53dfa2be7126c8c5d81d8461c",
+      "prompt": "02-blouse-construction.prompt.txt"
+    },
+    {
+      "file": "03-red-innerwear.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2508327,
+      "sha256": "21504db26580674f7d572dc37d17598889a6fcfdbd7ef0d70601a78713b376fe",
+      "prompt": "03-red-innerwear.prompt.txt"
+    },
+    {
+      "file": "04-skirt-layer-order.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2048865,
+      "sha256": "a5d89d02892f0d31091a57c5aad80d17f2ad3c0ae78a72a6a9608d54111fc565",
+      "prompt": "04-skirt-layer-order.prompt.txt"
+    },
+    {
+      "file": "05-tights-flats.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2124402,
+      "sha256": "7a45add4f6162d46da38961200cedba296859f73ab723dd32d5b5a448d8b1bd6",
+      "prompt": "05-tights-flats.prompt.txt"
+    },
+    {
+      "file": "06-materials-finishes.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2715991,
+      "sha256": "9a24b5684a8083cdadd11075d9e5e6c2681f2a8a89e5773c1c8180f420618503",
+      "prompt": "06-materials-finishes.prompt.txt"
+    }
+  ],
+  "successful_generations": 6,
+  "blocked_worn_character_attempts": 1,
+  "visual_review": "All six generated images inspected directly; costume products, palette, Korean labels, layering order, material details checked.",
+  "limitations": [
+    "No worn character, face or body design.",
+    "No first-person view, 3D model or VR validation.",
+    "Conceptual images, not measured patterns, texture maps or scan data."
+  ],
+  "pinoc_generation_calls": 0
+}

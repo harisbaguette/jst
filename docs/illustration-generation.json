@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-21",
+  "state": "verified",
+  "inputs": [
+    "assets/characters/seoah-illustration-front.png",
+    "assets/characters/seoah-illustration-side.png",
+    "assets/characters/seoah-illustration-back.png"
+  ],
+  "options": {
+    "refine": true,
+    "visibility": "private"
+  },
+  "balanceBefore": 40,
+  "taskId": "bcee7250-aaa6-442b-ac14-3c4d3c717d08",
+  "creditsCharged": 10,
+  "assetPublicId": "e06238a9-a60d-4856-b335-0a05eccfce8e",
+  "format": "high",
+  "model": "public/characters/seoah-illustration.vsplat",
+  "bytes": 1303772,
+  "sha256": "2fe71ad505ec622c2f505a56f8dc5fd13e7041f85130e62d19815583a017a1cc",
+  "balanceAfter": 30,
+  "splats": 48000
+}

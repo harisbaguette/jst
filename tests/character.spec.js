@@ -4,7 +4,7 @@ import { mkdir } from 'node:fs/promises';
 test('실제 캐릭터와 동작 재생, 정지, 카메라 조작', async ({ page }) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto('/');
+  await page.goto('/?model=original');
   await expect(page.locator('#status')).toHaveText('동작 재생 가능', { timeout: 90_000 });
   const splats = await page.evaluate(() => window.jst.character.splat.numSplats);
   expect(splats).toBe(48000);
@@ -52,7 +52,7 @@ test('실제 캐릭터와 동작 재생, 정지, 카메라 조작', async ({ pag
 
 test('모바일 폭에서 조작부와 캐릭터 표시', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
+  await page.goto('/?model=original');
   await expect(page.locator('#status')).toHaveText('동작 재생 가능', { timeout: 90_000 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   const controls = await page.locator('.transport').boundingBox();

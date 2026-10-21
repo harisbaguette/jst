@@ -1,0 +1,19 @@
+{
+  "waitedSeconds": 40,
+  "allSettled": true,
+  "tasks": [
+    {
+      "kind": "character",
+      "taskId": "bcee7250-aaa6-442b-ac14-3c4d3c717d08",
+      "state": "ready",
+      "status": "converting_bin",
+      "assets": [
+        {
+          "assetPublicId": "e06238a9-a60d-4856-b335-0a05eccfce8e",
+          "displayName": "be4c60b56cbfff671fb3357b2f368df4"
+        }
+      ]
+    }
+  ],
+  "nextSteps": "1 ready. Call get_asset with the returned assetPublicId (not the taskId), then present the selected signed URL as a clickable download link. This PINOC server is remote: download_asset cannot write to your disk, and a download-link request does not require a local file. A text motion task produces several samples of one prompt - read their names and take one rather than fetching all of them."
+}

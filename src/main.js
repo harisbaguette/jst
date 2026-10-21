@@ -1,5 +1,6 @@
 import './style.css';
 import sourceImage from '../assets/characters/seoah-front.png';
+import illustrationImage from '../assets/characters/seoah-illustration-front.png';
 import { bindRenderResolution } from './render-resolution.js';
 
 const $ = (id) => document.getElementById(id);
@@ -10,6 +11,7 @@ let paused = false;
 let loading = false;
 let faceView = false;
 let restPose = false;
+let currentModel = {};
 const bodyCamera = { distance: 3.8, pitch: 8, yaw: 0, target: { x: 0, y: .85, z: 0 } };
 const faceCamera = { distance: .95, pitch: 0, yaw: 0, target: { x: 0, y: 1.52, z: 0 } };
 
@@ -27,7 +29,7 @@ function applySpeed() {
 
 function resetCamera() {
   if (!controls) return;
-  const view = faceView ? faceCamera : bodyCamera;
+  const view = faceView ? (currentModel.faceCamera || faceCamera) : bodyCamera;
   controls.yaw = view.yaw;
   controls.pitch = view.pitch;
   controls.distance = view.distance;
@@ -42,7 +44,7 @@ function selectMotion(button) {
 function showRest() {
   if (!character) return;
   character.stop();
-  character.setRotation(0, -90, 0); // This asset's bind pose faces +X.
+  character.setRotation(0, currentModel.restYaw ?? -90, 0);
   restPose = true;
   paused = false;
   applySpeed();
@@ -56,7 +58,7 @@ function setFaceView(enabled) {
   document.body.classList.toggle('face-view', enabled);
   $('face-view').setAttribute('aria-pressed', String(enabled));
   $('body-view').setAttribute('aria-pressed', String(!enabled));
-  $('source-caption').textContent = enabled ? '원본 사진 · 얼굴 확대' : '생성 원본';
+  $('source-caption').textContent = enabled ? '원본 · 얼굴 확대' : '생성 원본';
   if (enabled) showRest();
   resetCamera();
 }
@@ -95,11 +97,23 @@ async function load() {
     if (!response.ok) throw new Error('캐릭터 정보를 읽지 못했습니다.');
     const manifest = await response.json();
     if (!manifest.model) throw new Error('모델 파일이 지정되지 않았습니다.');
-    const selected = $('model-select').value;
+    const selected = $('model-select').value || new URLSearchParams(location.search).get('model') || manifest.defaultModel;
     const models = manifest.models || [{ id: 'original', label: '현재 캐릭터', url: manifest.model }];
     $('model-select').replaceChildren(...models.map(model => new Option(model.label, model.id)));
     $('model-select').value = models.some(model => model.id === selected) ? selected : models[0].id;
     const model = models.find(model => model.id === $('model-select').value);
+    currentModel = model;
+    const isIllustration = model.id === 'illustration';
+    $('source-image').src = $('source-link').href = isIllustration ? illustrationImage : sourceImage;
+    $('source-image').alt = isIllustration
+      ? '아이보리 상의와 청록 치마를 입은 성인 여성 캐릭터의 정면 전신 일러스트'
+      : '아이보리 상의와 회색 바지를 입은 여성 캐릭터 서아의 정면 전신 원본';
+    $('character-description').textContent = isIllustration ? '25세 · 일러스트 캐릭터' : '한국인 · 25세 · 가상 캐릭터';
+    $('model-note').textContent = isIllustration
+      ? '정면·측면·후면 3장으로 생성했습니다. 얼굴 비교에서 원본과 확인할 수 있습니다.'
+      : '원본과 얼굴·피부 질감에 차이가 남아 있습니다. 얼굴 비교에서 확대해 확인할 수 있습니다.';
+    document.documentElement.style.setProperty('--face-source-height', model.faceSourceHeight || '279.2727%');
+    document.documentElement.style.setProperty('--face-source-top', model.faceSourceTop || '5.4545%');
     $('model-options').hidden = models.length < 2;
     $('status').textContent = '3D 캐릭터 불러오는 중';
     notice('캐릭터를 불러오고 있습니다', '모델과 동작 파일을 읽고 있습니다.');
@@ -161,7 +175,7 @@ async function load() {
       $('motion-warning').textContent = `${failed.join('·')} 동작을 불러오지 못했습니다. 다른 동작과 캐릭터는 볼 수 있습니다.`;
       $('motion-warning').hidden = false;
     }
-    window.jst = { scene, character, controls };
+    window.jst = { scene, character, controls, modelId: model.id };
   } catch (error) {
     console.error(error);
     destroyScene();

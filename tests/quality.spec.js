@@ -6,7 +6,7 @@ test('고해상도 화면의 실제 버퍼, 원형 비교와 모델 왕복 전�
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await mkdir('output/verification', { recursive: true });
-  await page.goto('/');
+  await page.goto('/?model=original');
   await expect(page.locator('#status')).toHaveText('동작 재생 가능');
   await page.locator('#face-view').click();
   await expect(page.locator('#rest')).toHaveAttribute('aria-pressed', 'true');
@@ -48,7 +48,7 @@ test('고해상도 화면의 실제 버퍼, 원형 비교와 모델 왕복 전�
 
 test('동작 한 개가 없어도 모델과 나머지 동작은 남는다', async ({ page }) => {
   await page.route('**/motions/walk.glb', route => route.fulfill({ status: 404, body: 'Missing' }));
-  await page.goto('/');
+  await page.goto('/?model=original');
   await expect(page.locator('#status')).toHaveText('동작 재생 가능', { timeout: 30_000 });
   await expect(page.locator('#motion-warning')).toContainText('걷기');
   await expect(page.locator('[data-motion="walk"]')).toHaveCount(0);
@@ -60,7 +60,7 @@ test('동작 한 개가 없어도 모델과 나머지 동작은 남는다', asyn
 
 test('모델 로드 실패 후 다시 불러오기로 3D 복구', async ({ page }) => {
   await page.route('**/characters/seoah.vsplat', route => route.fulfill({ status: 404, body: 'Missing' }));
-  await page.goto('/');
+  await page.goto('/?model=original');
   await expect(page.locator('#status')).toHaveText('불러오기 실패', { timeout: 30_000 });
   expect(await page.evaluate(() => window.jst)).toBeUndefined();
   await expect(page.locator('#download-model')).toBeHidden();

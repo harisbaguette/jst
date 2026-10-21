@@ -1,0 +1,152 @@
+{
+  "generate_character": {
+    "type": "object",
+    "properties": {
+      "uploadKeys": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "1 to 5 uploadKeys from prepare_upload, one per image, after each PUT has succeeded"
+      },
+      "imageFiles": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "download_url": {
+              "type": "string",
+              "description": "the attachment's download URL, supplied by the client"
+            },
+            "file_id": {
+              "type": "string",
+              "description": "the client's id for the attachment"
+            },
+            "mime_type": {
+              "type": "string",
+              "description": "the attachment's media type, when the client knows it"
+            },
+            "file_name": {
+              "type": "string",
+              "description": "the attachment's original filename, when the client knows it"
+            }
+          },
+          "required": [
+            "download_url",
+            "file_id"
+          ],
+          "additionalProperties": false
+        },
+        "description": "1 to 5 photographs the user attached to the conversation, all of the SAME person"
+      },
+      "prompt": {
+        "type": "string",
+        "description": "describe the ONE character to generate, 1-1000 characters"
+      },
+      "refine": {
+        "type": "boolean",
+        "description": "run the refine pass for higher fidelity (default true). Send false ONLY when the user asks for a faster or cheaper character"
+      },
+      "visibility": {
+        "type": "string",
+        "description": "private (default), unlisted, or public in the user's PINOC library"
+      }
+    },
+    "additionalProperties": false
+  },
+  "get_asset": {
+    "type": "object",
+    "properties": {
+      "assetPublicId": {
+        "type": "string",
+        "description": "the asset's UUID, from take_library_motion, wait_for_tasks or list_motion_library. NOT a task id"
+      },
+      "format": {
+        "type": "string",
+        "description": "optional: one format to get a URL for. Required for a format listed as onDemand (a motion's splat-skeleton files), which has no URL until it is built: naming it starts the build and returns the URL, or an exportId to wait on with wait_for_tasks. A scene has one file and no format to choose, so leave this out for one"
+      }
+    },
+    "required": [
+      "assetPublicId"
+    ],
+    "additionalProperties": false
+  },
+  "get_assets": {
+    "type": "object",
+    "properties": {
+      "assetPublicIds": {
+        "type": [
+          "null",
+          "array"
+        ],
+        "items": {
+          "type": "string"
+        },
+        "description": "the asset UUIDs to look up, from take_library_motion(s), wait_for_tasks or list_motion_library. NOT task ids. Repeats are collapsed"
+      }
+    },
+    "required": [
+      "assetPublicIds"
+    ],
+    "additionalProperties": false
+  },
+  "prepare_upload": {
+    "type": "object",
+    "properties": {
+      "filename": {
+        "type": "string",
+        "description": "the file's name with extension, e.g. dance.mp4"
+      },
+      "sizeBytes": {
+        "type": "integer",
+        "description": "exact file size in bytes, from stat or ls -l"
+      }
+    },
+    "required": [
+      "filename",
+      "sizeBytes"
+    ],
+    "additionalProperties": false
+  },
+  "wait_for_tasks": {
+    "type": "object",
+    "properties": {
+      "tasks": {
+        "type": [
+          "null",
+          "array"
+        ],
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "description": "motion, video_motion, character or environment - whichever tool started it - or export for an exportId from get_asset or download_asset"
+            },
+            "taskId": {
+              "type": "string",
+              "description": "the taskId returned by the generating tool, or the exportId"
+            }
+          },
+          "required": [
+            "kind",
+            "taskId"
+          ],
+          "additionalProperties": false
+        },
+        "description": "the tasks to poll, up to 20. Poll them together rather than one at a time"
+      },
+      "timeoutSeconds": {
+        "type": [
+          "null",
+          "integer"
+        ],
+        "description": "how long to wait before reporting back, 0 to 90 (default 45). 0 checks once and returns"
+      }
+    },
+    "required": [
+      "tasks"
+    ],
+    "additionalProperties": false
+  }
+}
