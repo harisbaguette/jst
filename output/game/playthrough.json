@@ -1,0 +1,18 @@
+{
+  "result": "pass",
+  "input": "keyboard and UI; no state teleport",
+  "splats": 48000,
+  "sharedLiveArmature": true,
+  "checks": [
+    "body look",
+    "mirror",
+    "turn",
+    "desk collision",
+    "pick up keys",
+    "blur pause and input release",
+    "exit completion",
+    "reload saved completion",
+    "restart"
+  ],
+  "pageErrors": []
+}

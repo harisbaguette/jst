@@ -1,0 +1,11 @@
+{
+  "archive": "seoah-afternoon.zip",
+  "entries": 33,
+  "bytes": 11875350,
+  "sha256": "2db9ce2b2e9444537677928b0548256b5191c24eeec290eaa52c6b316d9f5f9c",
+  "crc": "pass",
+  "all_file_hashes": "pass",
+  "runtime": "Python 3 or any static HTTP server; no PINOC authentication",
+  "playwright_tests_passed": 11,
+  "build": "pass"
+}

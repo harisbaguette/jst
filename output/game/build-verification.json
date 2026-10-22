@@ -1,0 +1,28 @@
+{
+  "result": "pass",
+  "source": "dist via Python loopback server",
+  "pointerLock": true,
+  "escapePause": true,
+  "bodyAndMirror": true,
+  "networkRestrictedToLocalhost": true,
+  "state": {
+    "x": 0,
+    "z": -1.3450000000000002,
+    "yaw": 0,
+    "pitch": -6,
+    "step": 1,
+    "ready": true,
+    "started": true,
+    "paused": false,
+    "ended": false,
+    "nearby": "mirror",
+    "currentMotion": "idle",
+    "turnTime": 0,
+    "walkAvailable": true,
+    "headHidden": 19499,
+    "splats": 48000
+  },
+  "errors": [],
+  "external": [],
+  "failed": []
+}

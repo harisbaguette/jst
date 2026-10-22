@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#252923" />
+  <title>서아의 오후 · 1인칭 체험</title>
+</head>
+<body>
+  <main id="game">
+    <canvas id="world" tabindex="0" aria-label="서아의 눈으로 바라보는 방. WASD 이동, 방향키 또는 드래그로 시선 조절"></canvas>
+    <header class="topbar"><a href="/" class="wordmark">JST <span>서아의 오후</span></a><div class="top-actions"><span id="save-status">자동 저장</span><button id="pause-button" disabled aria-label="일시정지 및 설정">일시정지 <kbd>Esc</kbd></button></div></header>
+    <section id="objective" class="objective" hidden aria-live="polite"><p class="eyebrow" id="chapter">01 / 04</p><h1 id="task-title"></h1><p id="task-detail"></p><div class="steps" aria-hidden="true"><i></i><i></i><i></i><i></i></div></section>
+    <div id="crosshair" aria-hidden="true" hidden></div>
+    <div id="waypoint" hidden><span class="waypoint-dot"></span><span id="waypoint-label"></span></div>
+    <div id="interaction" hidden><button id="interact-button"><kbd>E</kbd><span id="interact-label"></span></button></div>
+    <p id="toast" role="status" hidden></p>
+    <footer id="controls" hidden><span><kbd>W A S D</kbd> 걷기</span><span><kbd>드래그 / 방향키</kbd> 둘러보기</span><button id="look-button"><kbd>B</kbd> 몸 내려다보기</button><button id="turn-button"><kbd>R</kbd> 거울 앞 회전</button></footer>
+    <div id="touch-controls" hidden aria-label="터치 이동"><button data-move="KeyW" aria-label="앞으로">↑</button><div><button data-move="KeyA" aria-label="왼쪽">←</button><button data-move="KeyS" aria-label="뒤로">↓</button><button data-move="KeyD" aria-label="오른쪽">→</button></div></div>
+    <section id="menu" class="scrim" aria-label="시작 및 일시정지 메뉴">
+      <div class="menu-card"><p class="eyebrow">A SMALL MOMENT, AS SEOAH</p><h2 id="menu-title">서아의 오후</h2><p id="menu-description">낯선 눈높이, 익숙해지는 움직임.<br>서아의 몸으로 방을 거닐고, 외출을 준비해 보세요.</p>
+        <div class="intro-details"><span>1인칭 · 자유로운 시선</span><span>전신 거울 · 짧은 탐색</span></div>
+        <p id="loading-status" role="status">방과 캐릭터를 준비하고 있습니다…</p>
+        <button id="start" class="primary" disabled>준비 중…</button>
+        <button id="restart" class="text-button" hidden>처음부터 다시</button>
+        <button id="retry" class="primary" hidden>다시 불러오기</button>
+        <details id="settings"><summary>조작과 설정</summary><p>WASD 이동 · 방향키 또는 화면 드래그로 시선 조절<br>B 몸 내려다보기 · E 상호작용 · R 거울 앞 회전 · Esc 일시정지</p><label>시선 감도 <input id="sensitivity" type="range" min="0.08" max="0.4" step="0.02" value="0.18"></label><label><input id="sound" type="checkbox" checked> 발걸음과 알림 소리</label><label><input id="capture-mouse" type="checkbox"> 마우스 시선 고정 (Esc로 해제)</label><p class="small">데스크톱 브라우저 체험판 · 헤드셋과 컨트롤러는 지원하지 않습니다.</p></details>
+        <a class="back-link" href="/">캐릭터 뷰어로 돌아가기 ↗</a>
+      </div>
+    </section>
+    <section id="ending" class="scrim" hidden aria-label="체험 완료"><div class="menu-card"><p class="eyebrow">READY TO STEP OUT</p><h2>이제, 나가 볼까요.</h2><p>시선과 발걸음에 익숙해진 오후.<br>오늘의 짧은 준비를 마쳤습니다.</p><div class="end-record"><span>몸 살펴보기 ✓</span><span>거울 확인 ✓</span><span>열쇠 챙기기 ✓</span></div><button id="explore" class="primary">방에서 더 둘러보기</button><button id="play-again" class="text-button">처음부터 다시</button></div></section>
+  </main>
+  <script type="module" src="/src/game/main.js"></script>
+</body>
+</html>

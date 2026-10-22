@@ -11,3 +11,4 @@ playwright-report/
 
 # 외부 오픈소스 실험 환경(대용량)
 third_party/
+/.project-map/
